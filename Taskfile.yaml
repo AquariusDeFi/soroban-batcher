@@ -1,0 +1,31 @@
+version: '3'
+
+tasks:
+  default:
+    cmds:
+      - task: build
+
+  all:
+    cmds:
+      - task: clean
+      - task: fmt
+      - task: build
+      - task: test
+
+  build:
+    cmds:
+      - soroban contract build
+      - soroban contract optimize --wasm target/wasm32-unknown-unknown/release/soroban_batcher.wasm --wasm-out target/wasm32-unknown-unknown/release/soroban_batcher.wasm
+      - ls -l target/wasm32-unknown-unknown/release/*.wasm
+
+  test:
+    cmd: cargo test
+
+  check:
+    cmd: cargo check --all
+
+  fmt:
+    cmd: cargo fmt --all
+
+  clean:
+    cmd: cargo clean
