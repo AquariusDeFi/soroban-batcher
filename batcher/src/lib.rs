@@ -5,8 +5,12 @@ use soroban_sdk::{contract, contractimpl, Address, Env, Symbol, Val, Vec};
 pub struct ContractBatcher;
 
 pub trait BatcherInterface {
-    fn batch(e: Env, auth_users: Vec<Address>, batch: Vec<(Address, Symbol, Vec<Val>)>)
-        -> Vec<Val>;
+    fn batch(
+        e: Env,
+        auth_users: Vec<Address>,
+        batch: Vec<(Address, Symbol, Vec<Val>)>,
+        return_result: bool,
+    ) -> Vec<Val>;
 }
 
 #[contractimpl]
@@ -15,13 +19,17 @@ impl BatcherInterface for ContractBatcher {
         e: Env,
         auth_users: Vec<Address>,
         batch: Vec<(Address, Symbol, Vec<Val>)>,
+        return_result: bool,
     ) -> Vec<Val> {
         for user in auth_users {
             user.require_auth();
         }
         let mut results = Vec::new(&e);
         for (contract, fn_name, args) in batch {
-            results.push_back(e.invoke_contract(&contract, &fn_name, args));
+            let result = e.invoke_contract(&contract, &fn_name, args);
+            if return_result {
+                results.push_back(result);
+            }
         }
         results
     }

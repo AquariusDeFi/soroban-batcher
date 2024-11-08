@@ -65,6 +65,7 @@ fn test() {
                 ),
             ],
         ),
+        &true,
     );
 
     let results = plane_client.get(&Vec::from_array(&e, [pool1.clone(), pool2.clone()]));
@@ -104,6 +105,7 @@ fn test() {
                 ),
             ],
         ),
+        &true,
     );
     let result1 = batch_results.get(0).unwrap();
     let result1_vec: Vec<(Symbol, Vec<u128>, Vec<u128>)> = Vec::try_from_val(&e, &result1).unwrap();
