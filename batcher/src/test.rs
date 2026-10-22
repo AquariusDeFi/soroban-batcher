@@ -11,11 +11,11 @@ mod pool_plane {
 }
 
 fn create_plane_contract<'a>(e: &Env) -> pool_plane::Client<'a> {
-    pool_plane::Client::new(e, &e.register_contract_wasm(None, pool_plane::WASM))
+    pool_plane::Client::new(e, &e.register(pool_plane::WASM, ()))
 }
 
 fn create_contract<'a>(e: &Env) -> ContractBatcherClient<'a> {
-    let client = ContractBatcherClient::new(e, &e.register_contract(None, ContractBatcher {}));
+    let client = ContractBatcherClient::new(e, &e.register(ContractBatcher {}, ()));
     client
 }
 

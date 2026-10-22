@@ -14,9 +14,8 @@ tasks:
 
   build:
     cmds:
-      - soroban contract build
-      - soroban contract optimize --wasm target/wasm32-unknown-unknown/release/soroban_batcher.wasm --wasm-out target/wasm32-unknown-unknown/release/soroban_batcher.wasm
-      - ls -l target/wasm32-unknown-unknown/release/*.wasm
+      - stellar contract build --package soroban-batcher --optimize
+      - ls -l target/wasm32v1-none/release/*.wasm
 
   test:
     cmd: cargo test
